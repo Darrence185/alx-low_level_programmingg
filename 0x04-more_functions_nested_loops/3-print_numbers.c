@@ -1,17 +1,14 @@
-#include "holberton.h"
+#include "main.h"
 /**
- * print_numbers - prints 0 - 9, newline.
- *
- * @void: Does not accept arguments.
- *
- * Return: void - has no return value.
- */
+*print_numbers - a function that prints the numbers, from 0 to 9
+*
+*Return: 0-9 followed by newline
+*/
 void print_numbers(void)
 {
-int i;
-for (i = '0'; i <= '9'; i++)
-{
-_putchar(i);
-}
-_putchar('\n');
+	int n;
+
+	for (n = 0; n <= 9; n++)
+	_putchar(n + '0');
+	_putchar('\n');
 }

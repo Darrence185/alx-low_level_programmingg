@@ -4,7 +4,7 @@
 *
 *Return: 0-9 followed by newline
 */
-void print_numbers(void)
+void print_numbers(void);
 {
 int i;
 	for (i = 0; i <= 9; i++)

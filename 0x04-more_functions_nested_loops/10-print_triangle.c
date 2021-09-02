@@ -1,31 +1,34 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * print_triangle - prints a triangle, followed by a new line
- * @size: size of the triangle
+ * print_triangle - check for a digit
+ * @size : integer type
+ * Return:void
  */
+
 void print_triangle(int size)
 {
-	if (size <= 0)
-	{
-		_putchar('\n');
-	} else
-	{
-		int i, j;
 
-		for (i = 1; i <= size; i++)
+	int i = 1, j;
+
+	while (i <= size && size > 0)
+	{
+		j = 0;
+		while (j < size - i)
 		{
-			for (j = i; j < size; j++)
-			{
-				_putchar(' ');
-			}
-
-			for (j = 1; j <= i; j++)
-			{
-				_putchar('#');
-			}
-
-			_putchar('\n');
+			_putchar(' ');
+			j++;
 		}
+		j = 0;
+		while (j < i)
+		{
+			_putchar('#');
+			j++;
+		}
+
+		_putchar('\n');
+		i++;
 	}
+	if (i == 1)
+		_putchar('\n');
 }

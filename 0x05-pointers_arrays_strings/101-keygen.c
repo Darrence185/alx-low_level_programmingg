@@ -1,18 +1,24 @@
-#include "holberton.h"
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <time.h>
 /**
- * main - check the code for ALX School students.
- *
- * Return: Always 0.
+ * main - generates keygen.
+ * Return: 0 Always.
  */
 int main(void)
 {
-    int n;
+	int r = 0, c = 0;
+	time_t t;
 
-    n = 402;
-    printf("n=%d\n", n);
-    reset_to_98(&n);
-    printf("n=%d\n", n);
-    return (0);
+	srand((unsigned int) time(&t));
+	while (c < 2772)
+	{
+		r = rand() % 128;
+		if ((c + r) > 2772)
+			break;
+		c = c + r;
+		printf("%c", r);
+	}
+	printf("%c\n", (2772 - c));
+	return (0);
 }

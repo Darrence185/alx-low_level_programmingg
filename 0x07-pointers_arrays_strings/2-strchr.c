@@ -1,29 +1,23 @@
 #include "holberton.h"
 #include <stddef.h>
-
 /**
- * _strchr - locate character in string.
- *
- * @s: string.
- * @c: type char.
- *
- * Return: pointer to type char.
+ * *_strchr - Locate a character in the string
+ * @s: pointer to put the constant
+ * @c: constant
+ * Return: s
  */
+
 char *_strchr(char *s, char c)
 {
-	int k = 0;
+	int i;
 
-	while (*s != '\0')
+	for (i = 0; s[i] >= '\0'  ; i++)
 	{
-		if (*s == c)
+		if (s[i] == c)
 		{
-			k++;
-			break;
+			return (s + i);
 		}
-		s++;
 	}
-	if (k == 1)
-		return (s);
-	else
-		return (0);
+
+	return ('\0');
 }

@@ -1,71 +1,109 @@
-#include "main.h"
-#include <stdio.h>
+#includ "main.h"
 
 /**
- * main - check the code
+ * infinite_add - Add 2 integers.
  *
- * Return: Always 0.
+ * @n1: integer
+ *
+ * @n2: integer
+ *
+ * @r: buffer
+ *
+ * size_r: size of r
+ *
+ * Return: char
  */
 
-int main(void)
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-        char *n = "1234567892434574367823574575678477685785645685876876774586734734563456453743756756784458";
-        char *m = "9034790663470697234682914569346259634958693246597324659762347956349265983465962349569346";
-        char r[100];
-        char r2[10];
-        char r3[11];
-        char *res;
+	int c = 0, y = 0, z;
+	char *s1 = n1, *s2 = n2;
 
-        res = infinite_add(n, m, r, 100);
+	while (*s1 != 0)
+		s1++;
+	while (*s2 != 0)
+		s2++;
+	size_r--;
+	r[size_r] = 0;
+	s1--;
+	s2--;
 
-        if (res == 0)
-        {
-                printf("Error\n");
-        }
+	while (s2 != n2 - 1 && s1 != n1 - 1)
+	{
+		r[y] = *s2 - '0' + *s1 + c;
+		c = 0;
 
-        else
-        {
-                printf("%s + %s = %s\n", n, m, res);
-        }
+		if (r[y] > '9')
+		{
+			c++;
+			r[y] -= 10;
+		}
 
-        n = "1234567890";
-        m = "1";
-        res = infinite_add(n, m, r2, 10);
+		y++;
+		s2--;
+		s1--;
 
-        if (res == 0)
-        {
-                printf("Error\n");
-        }
+		if (size_r == y && (s1 != n1 - 1 || s2 != n2 - 1 || c == 1))
+			return (0);
+	}
 
-        else
-        {
-                printf("%s + %s = %s\n", n, m, res);
-        }
+	while (s1 != n1 - 1)
+	{
+		r[y] = *s1 + c;
+		c = 0;
 
-        n = "999999999";
-        m = "1";
-        res = infinite_add(n, m, r2, 10);
+		if (r[y] > '9')
+		{
+			c = 1;
+			r[y] -= 10;
+		}
 
-        if (res == 0)
-        {
-                printf("Error\n");
-        }
+		s1--;
+		y++;
 
-        else
-        {
-                printf("%s + %s = %s\n", n, m, res);
-        }
+		if (size_r == y && (s1 != n1 - 1 ||  c == 1))
+			return (0);
+	}
 
-        res = infinite_add(n, m, r3, 11);
+	while (s2 != n2 - 1)
+	{
+		r[y] = *s2 + c;
+		c = 0;
 
-        if (res == 0)
-        {
-                printf("Error\n");
-        }
-        else
-        {
-                printf("%s + %s = %s\n", n, m, res);
-        }
+		if (r[y] > '9')
+		{
+			c = 1;
+			r[y] -= 10;
+		}
 
-        return (0);
+		s2--;
+		y++;
+
+		if (size_r == y && (s2 != n2 - 1 || c == 1))
+			return (0);
+	}
+
+	if (c == 1)
+	{
+		r[y] = '1';
+		r[y + 1] = 0;
+	}
+
+	else
+	{
+		r[y--] = 0;
+	}
+
+	z = 0;
+
+	while (z <= y)
+	{
+		c = r[y];
+		r[y] = r[z];
+		r[z] = c;
+		y--;
+		z++;
+	}
+
+	return (r);
 }

@@ -1,77 +1,65 @@
-#include "main.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include "holberton.h"
+int _strlen(char *s);
 
 /**
- * _strlen - find length of a string
- *
- * @s: string
- *
- * Return: int
+ * str_concat -  returns a pointer to a newly allocated space in memory
+ * which contains the string value of concatenation of s2 upon s1.
+ * @s1: first string.
+ * @s2: second string.
+ * Return: pointer to array of char.
  */
-
-
-int _strlen(char *s)
-{
-	int size = 0;
-
-	for (; s[size] != '\0'; size++)
-	{
-		;
-	}
-
-	return (size);
-}
-
-/**
- * *str_concat - concatenates two strings
- *
- * @s1: string 1
- *
- * @s2: string 2
- *
- * Return: pointer
- */
-
 char *str_concat(char *s1, char *s2)
 {
-	int size1, size2, i;
-	char *m;
+	int lens1, lens2;
+	int i, k;
+	char *arr;
 
-	if (s1 == NULL)
+	lens1 = _strlen(s1);
+	lens2 = _strlen(s2);
+	arr = malloc(sizeof(char) * (lens1 + lens2 + 1));
+	if (arr == NULL)
 	{
-		s1 = "\0";
+		return (NULL);
 	}
-
-	if (s2 == NULL)
+	else
 	{
-		s2 = "\0";
-	}
-
-	size1 = _strlen(s1);
-	size2 = _strlen(s2);
-
-	m = malloc((size1 + size2) * sizeof(char) + 1);
-
-	if (m == 0)
-	{
-		return (0);
-	}
-
-	for (i = 0; i <= size1 + size2; i++)
-	{
-		if (i < size1)
+		if (s1)
 		{
-			m[i] = s1[i];
+			for (i = 0; i < lens1; i++)
+			{
+				arr[i] = s1[i];
+			}
 		}
-
-		else
+		if (s2)
 		{
-			m[i] = s2[i - size1];
+			k = 0;
+			while (k < lens2)
+			{
+				arr[i] = s2[k];
+				i++;
+				k++;
+			}
 		}
+		arr[i] = '\0';
+		return (arr);
 	}
+}
+/**
+ * _strlen - compute string length.
+ *
+ * @s: pointer to a string.
+ *
+ * Return: length of string
+ */
+int _strlen(char *s)
+{
+	int counter = 0;
 
-	m[i] = '\0';
-
-	return (m);
+	while (*s != '\0')
+	{
+		s++;
+		counter++;
+	}
+	return (counter);
 }

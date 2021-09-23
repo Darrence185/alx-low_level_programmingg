@@ -1,45 +1,52 @@
-#include <stdlib.h>
 #include "holberton.h"
+#include <stdlib.h>
 
 /**
- * *argstostr - concatenates argument(s) of program.
- * @ac: number of arguments.
- * @av: array of arguments.
- * Return: pointer to new string,else if NULL == error.
+ * argstostr - concatenates all the arguments of a program.
+ * @ac: argument count.
+ * @av: argument vector.
+ *
+ * Return: pointer of an array of char
  */
 char *argstostr(int ac, char **av)
 {
-	int i, j, k, len;
-	char *args;
+	char *aout;
+	int c, i, j, ia;
 
-	if (ac == 0 || av == NULL)
+	if (ac == 0)
+		return (NULL);
+
+	for (c = i = 0; i < ac; i++)
 	{
+		if (av[i] == NULL)
+			return (NULL);
+
+		for (j = 0; av[i][j] != '\0'; j++)
+			c++;
+		c++;
+	}
+
+	aout = malloc((c + 1) * sizeof(char));
+
+	if (aout == NULL)
+	{
+		free(aout);
 		return (NULL);
 	}
 
-	for (i = 0; i < ac; i++)
+	for (i = j = ia = 0; ia < c; j++, ia++)
 	{
-		for (j = 0; av[i][j] != '\0'; j++)
+		if (av[i][j] == '\0')
 		{
-			len++;
+			aout[ia] = '\n';
+			i++;
+			ia++;
+			j = 0;
 		}
-		len++;
+		if (ia < c - 1)
+			aout[ia] = av[i][j];
 	}
-	args = malloc(sizeof(char) * (len + 1));
-	if (args == NULL)
-	{
-		return (NULL);
-	}
-	k = 0;
-	for (i = 0; i < ac; i++)
-	{
-		for (j = 0; av[i][j] != '\0'; j++)
-		{
-			args[k] = av[i][j];
-			k++;
-		}
-		args[k] = '\n';
-		k++;
-	}
-	return (args);
+	aout[ia] = '\0';
+
+	return (aout);
 }

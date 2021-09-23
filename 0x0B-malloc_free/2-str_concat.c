@@ -1,65 +1,43 @@
-#include <stdlib.h>
 #include "holberton.h"
-int _strlen(char *s);
+#include <stdlib.h>
 
 /**
- * str_concat -  returns a pointer to a newly allocated space in memory
- * which contains the string value of concatenation of s2 upon s1.
+ * str_concat - concatenates two strings.
  * @s1: first string.
  * @s2: second string.
- * Return: pointer to array of char.
+ *
+ * Return: pointer of an array of chars
  */
 char *str_concat(char *s1, char *s2)
 {
-	int lens1, lens2;
-	int i, k;
-	char *arr;
+	char *strout;
+	unsigned int i, j, k, limit;
 
-	lens1 = _strlen(s1);
-	lens2 = _strlen(s2);
-	arr = malloc(sizeof(char) * (lens1 + lens2 + 1));
-	if (arr == NULL)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+
+	for (i = 0; s1[i] != '\0'; i++)
+		;
+
+	for (j = 0; s2[j] != '\0'; j++)
+		;
+
+	strout = malloc(sizeof(char) * (i + j + 1));
+
+	if (strout == NULL)
 	{
+		free(strout);
 		return (NULL);
 	}
-	else
-	{
-		if (s1)
-		{
-			for (i = 0; i < lens1; i++)
-			{
-				arr[i] = s1[i];
-			}
-		}
-		if (s2)
-		{
-			k = 0;
-			while (k < lens2)
-			{
-				arr[i] = s2[k];
-				i++;
-				k++;
-			}
-		}
-		arr[i] = '\0';
-		return (arr);
-	}
-}
-/**
- * _strlen - compute string length.
- *
- * @s: pointer to a string.
- *
- * Return: length of string
- */
-int _strlen(char *s)
-{
-	int counter = 0;
 
-	while (*s != '\0')
-	{
-		s++;
-		counter++;
-	}
-	return (counter);
+	for (k = 0; k < i; k++)
+		strout[k] = s1[k];
+
+	limit = j;
+	for (j = 0; j <= limit; k++, j++)
+		strout[k] = s2[j];
+
+	return (strout);
 }

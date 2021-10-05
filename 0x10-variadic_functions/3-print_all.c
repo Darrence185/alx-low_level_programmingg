@@ -1,57 +1,79 @@
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "variadic_functions.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 /**
- * print_all - print any type of args followed by \n
- * @format: const format pointer to const char, format specifier
- * @...: optional argument(s)
- * Return: nothing
+ * _printchar - print char type element from va_list
+ * @list: va_list passed to function
+ */
+void _printchar(va_list list)
+{
+	printf("%c", va_arg(list, int));
+}
+
+/**
+ * _printstr - print string element from va_list
+ * @list: va_list passed to function
+ */
+void _printstr(va_list list)
+{
+	char *s;
+
+	s = va_arg(list, char *);
+	if (s == NULL)
+		s = "(nil)";
+	printf("%s", s);
+}
+
+/**
+ * _printfloat - print float type element from va_list
+ * @list: va_list passed to function
+ */
+void _printfloat(va_list list)
+{
+	printf("%f", va_arg(list, double));
+}
+
+/**
+ * _printint - print int type element from va_list
+ * @list: va_list passed to function
+ */
+void _printint(va_list list)
+{
+	printf("%d", va_arg(list, int));
+}
+
+/**
+ * print_all - print anything passed if char, int, float, or string.
+ * @format: string of formats to use and print
  */
 void print_all(const char * const format, ...)
 {
-	int i;
-	int in;
-	char ch;
-	float fl;
-	char *st;
-	va_list param;
+	unsigned int i, j;
+	va_list args;
+	char *sep;
 
-	va_start(param, format);
-	if (format == NULL)
-		return;
+	checker storage[] = {
+		{ "c", _printchar },
+		{ "f", _printfloat },
+		{ "s", _printstr },
+		{ "i", _printint }
+	};
+
 	i = 0;
-	while (format[i] != '\0')
+	sep = "";
+	va_start(args, format);
+	while (format != NULL && format[i / 4] != '\0')
 	{
-		switch (format[i])
+		j = i % 4;
+		if (storage[j].type[0] == format[i / 4])
 		{
-			case 's' :
-				st = va_arg(param, char *);
-				if (st == NULL)
-					printf("(nil)");
-				else
-					printf("%s", st);
-				break;
-			case 'c' :
-				ch = va_arg(param, int);
-				printf("%c", ch);
-				break;
-			case 'i' :
-				in = va_arg(param, int);
-				printf("%d", in);
-				break;
-			case 'f' :
-				fl = va_arg(param, double);
-				printf("%f", fl);
-				break;
-			default :
-				break;
+			printf("%s", sep);
+			storage[j].f(args);
+			sep = ", ";
 		}
-		if (format[i + 1] != '\0' && (format[i] == 's' || format[i] == 'c' || 
-					format[i] == 'i' || format[i] == 'f'))
-			printf(", ");
 		i++;
 	}
-	va_end(param);
 	printf("\n");
+	va_end(args);
 }

@@ -1,32 +1,30 @@
 #include "main.h"
-#include <stdio.h>
-
 /**
- * _strspn - returns number of bytes in the initial sengment s
- * @s: for the count action
- * @accept: parameter for char
- * Return: number of bytes;
- */
-
+  *_strspn - search a string for a set of bytes
+  *@s: source string
+  *@accept: accepted string
+  *
+  *Return: number of bytes in the init
+  */
 unsigned int _strspn(char *s, char *accept)
 {
-unsigned int num;
-int i, j, t;
+	unsigned int b = 0;
+	int i;
 
-i = 0;
-while (s[i] != '\0')
-{
-t = 0;
-for (j = 0; accept[j] != '\0'; j++)
-{
-if (s[i] == accept[j])
-t = 1;
-}
-j = 0;
-if (t == 0)
-break;
-num++;
-i++;
-}
-return (i);
+	while (*s)
+	{
+		for (i = 0; accept[i]; i++)
+		{
+			if (*s == accept[i])
+			{
+
+				b++;
+				break;
+			}
+			else if (accept[i + 1] == '\0')
+				return (b);
+		}
+		s++;
+	}
+	return (b);
 }
